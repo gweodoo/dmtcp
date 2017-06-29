@@ -605,6 +605,26 @@ extern "C" int fcntl(int fd, int cmd, ...)
   return retval;
 }
 
+
+#define _real_move_pages NEXT_FNC(move_pages)
+extern "C" long move_pages(pid_t pid, unsigned long nr_pages,
+				 const void **pages,
+				 const int *nodes,
+				 int *status,
+				 int flags)
+{
+
+	DMTCP_PLUGIN_DISABLE_CKPT();
+
+
+	pid_t real = VIRTUAL_TO_REAL_PID(pid);
+	JTRACE("IN move_pages()")(pid)(real);
+	int retval = _real_move_pages(real, nr_pages, pages, nodes, status, flags);
+
+	DMTCP_PLUGIN_ENABLE_CKPT();
+	return retval;
+}
+
 /*
 extern "C" int setgid(gid_t gid)
 {
@@ -698,11 +718,6 @@ extern "C" int setuid(uid_t uid)
 // long sys_migrate_pages(pid_t pid, unsigned long maxnode,
 // 				const unsigned long __user *from,
 // 				const unsigned long __user *to);
-// long sys_move_pages(pid_t pid, unsigned long nr_pages,
-// 				const void __user * __user *pages,
-// 				const int __user *nodes,
-// 				int __user *status,
-// 				int flags);
 // long compat_sys_move_pages(pid_t pid, unsigned long nr_page,
 // 				__u32 __user *pages,
 // 				const int __user *nodes,
