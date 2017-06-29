@@ -457,6 +457,7 @@ void writeScript(const string& ckptDir,
                   "      eval $(dmtcp_discover_rm -n \"$worker_ckpts\")\n"
                   "      if [ -n \"$DMTCP_DISCOVER_RM_ERROR\" ]; then\n"
                   "          echo \"Restart error: $DMTCP_DISCOVER_RM_ERROR\"\n"
+                  "          echo \"Initial resources  : $input_config\"\n"
                   "          echo \"Allocated resources: $manager_resources\"\n"
                   "          exit 0\n"
                   "      fi\n"

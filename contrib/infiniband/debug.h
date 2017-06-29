@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 
-//#define IBV_DEBUG
+#define IBV_DEBUG
 
 #ifdef IBV_DEBUG
 #define PDEBUG(fmt, ...) \
