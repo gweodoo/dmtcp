@@ -461,6 +461,8 @@ void writeScript(const string& ckptDir,
                   "          echo \"Allocated resources: $manager_resources\"\n"
                   "          exit 0\n"
                   "      fi\n"
+                  "      export DMTCP_COORD_PORT=$coord_port\n"
+                  "      export DMTCP_COORD_HOST=$coord_host\n"
                   "      export DMTCP_REMLAUNCH_NODES=$DMTCP_REMLAUNCH_NODES\n"
                   "      bound=$(($DMTCP_REMLAUNCH_NODES - 1))\n"
                   "      for i in $(seq 0 $bound); do\n"
