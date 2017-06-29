@@ -83,6 +83,27 @@ int ibv_query_device(struct ibv_context *context,
   return rslt;
 }
 
+/* MPC BEGIN: Adding the missing wrapper */
+/*
+ * This 'undef' is mandatory (for now) because the libibvers header redirects
+ * ibv_query_port to __ibv_query_port (a static inline function) via macro.
+ * According to doc, this hook is used for compatibily w/ old versions.
+ * For now, we explicitly disable it.
+ */
+#undef ibv_query_port
+int ibv_query_port(struct ibv_context *context, uint8_t port,
+                     struct ibv_port_attr *port_attr)
+{
+  DMTCP_PLUGIN_DISABLE_CKPT();
+  PDEBUG("******* WRAPPER for begin of ibv_query_port\n");
+
+  int rslt = _query_port(context,port,port_attr);
+
+  DMTCP_PLUGIN_ENABLE_CKPT();
+  return rslt;
+}
+/* MPC END */
+
 int ibv_query_pkey(struct ibv_context *context, uint8_t port_num,
                    int index, uint16_t *pkey)
 {
