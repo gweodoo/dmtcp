@@ -141,13 +141,13 @@ extern "C" int PMI_Init( int *spawned )
 // Intel MPI uses dlopen() and dlsym() to find pmi functions.
 // We need to redirect PMI_Init() to our wrapper, so that
 // pmi is correctly initialized.
-extern "C" void *dlsym(void *handle, const char *symbol)
+/*extern "C" void *dlsym(void *handle, const char *symbol)
 {
   if (symbol && strcmp(symbol, "PMI_Init") == 0) {
     return (void *)PMI_Init;
   }
   return _real_dlsym(handle, symbol);
-}
+}*/
 
 int rm_shutdown_pmi()
 {
