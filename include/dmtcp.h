@@ -233,7 +233,9 @@ EXTERNC const char* dmtcp_get_ckpt_files_subdir(void);
 EXTERNC int dmtcp_should_ckpt_open_files(void);
 EXTERNC int dmtcp_allow_overwrite_with_ckpted_files(void);
 
-EXTERNC int dmtcp_get_ckpt_signal(void);
+EXTERNC int dmtcp_get_ckpt_signal(void) __attribute__((weak));
+#define dmtcp_get_ckpt_signal() \
+ (dmtcp_get_ckpt_signal ? dmtcp_get_ckpt_signal() : DMTCP_NOT_PRESENT)
 EXTERNC const char* dmtcp_get_uniquepid_str(void) __attribute__((weak));
 
 /*
